@@ -3,20 +3,30 @@
 /*}*/
 
 html, body{
-	min-height: 100%;
+	height: 100%;
 }
-.box{
-	flex: 1;
-	min-height: 100vh;
+body{
+	display: flex;
+    flex-direction: column;
+}
+
+main{
+	flex: 1 0 auto;
 }
 
 .bg-col{
 	background: #252525;
 }
+.banner{
+	font-family: "Agency FB";
+	font-size: 1.5rem;
+}
 .cd-col{
 	background: #969696;
 }
-
+.footer-1{
+	flex-shrink: 0;
+}
 footer .main-footer{padding: 20px 0;
 					background: #252525;
 }
