@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['FxPippette-dev.af-south-1.elasticbeanstalk.com']
 
@@ -60,6 +60,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'FxPippette.urls'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
 STATIC_ROOT = BASE_DIR / 'static_root'
 
 STATIC_URL = '/static/'
