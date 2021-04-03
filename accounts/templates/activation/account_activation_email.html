@@ -1,0 +1,15 @@
+
+{% extends 'base_email.html' %}
+  {% block info %}
+  {% endblock info %}
+  {% block user %}
+    <p>Hi <strong>{{ user.username }}</strong></p>
+  {% endblock user %}
+  {% block msg %}
+    <p>Thank you for registering with us</p>
+    <p>We just need to validate your email address to activate your Fxpippette account. Simply click the following button</p>
+    <a class="btn btn-block" href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">Activate</a>
+    <p>If the link doesn’t work, copy this URL into your browser: http://{{ domain }}{% url 'activate' uidb64=uid token=token %}</p>
+  {% endblock msg %}
+
+

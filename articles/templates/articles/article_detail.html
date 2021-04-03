@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="container-sm row my-3 py-3">
+{#        <div class="row">#}
+            <article class="col-sm-auto mx-auto">
+                <h2 class="">{{ article.title }}</h2>
+                <div class="">
+                    {% autoescape off%}
+                    {{ article.content}}
+                {% endautoescape %}
+                </div>
+
+                <div class="">
+                    {% if prev %}
+                        <a href="{{prev.get_absolute_url}}" class="btn btn-primary">Previous</a>
+                    {% endif %}
+                    {% if next %}
+                        <a href="{{next.get_absolute_url}}" class="btn btn-primary">Next</a>
+                    {% endif %}
+                </div>
+            </article>
+{#        </div>#}
+    </section>
+{% endblock content %}
+
+{% block content1 %}
+    {% if others %}
+    <section class="container-sm pb-3">
+        <h2>Related Lessons</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 ">
+            {% for art in others %}
+                <div class="col">
+                    {% include 'articles/article_card.html' with article=art %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+  {% endif %}
+{% endblock content1 %}

@@ -1,0 +1,52 @@
+
+:root{
+    font-size: 0.875em;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f0f0f0;
+    color: #bfe6ff;
+}
+
+.main{
+    background-color: #252525;
+    margin: auto;
+    width: 65rem;
+}
+
+.head{
+    text-align: center;
+    background: #f9f9f9;
+    color: #191c1f;
+    font-family: "Agency FB";
+    font-size: 50px;
+    padding: 10px 0;
+    height: 100%;
+}
+
+.msg{
+    text-align: center;
+    font-size: 2rem;
+}
+
+.btn1{
+    border: 3px;
+    border-radius: 10%;
+    padding: 5px;
+    background-color: darkorange;
+    color: #fff;
+    text-decoration: none;
+}
+
+.copy{
+    background: #222;
+    margin: 2px 0 0;
+    text-align: center;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+.user{
+    text-align: justify;
+    padding-left: 2em;
+    font-size: 2rem;
+}
