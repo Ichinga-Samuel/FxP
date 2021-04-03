@@ -25,7 +25,7 @@ SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['FxPippette-dev2.af-south-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['FxPippette-dev.us-west-2.elasticbeanstalk.com']
 
 
 # Application definition
