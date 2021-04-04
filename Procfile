@@ -1,1 +1,1 @@
-web: gunicorn FxPippette.wsgi --log-fpytile -
+web: gunicorn FxPippette.wsgi --log-file -
