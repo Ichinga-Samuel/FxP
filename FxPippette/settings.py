@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -25,8 +24,7 @@ SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['FxPippette-dev.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = ['https://fxdjango.herokuapp.com/', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -48,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,6 +61,8 @@ ROOT_URLCONF = 'FxPippette.urls'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 STATIC_ROOT = BASE_DIR / 'static_root'
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -127,29 +128,17 @@ TINYMCE_DEFAULT_CONFIG = {
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':  'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'SAMIYOLsam2520',
-            'HOST': '127.0.0.1',
-            'PORT': '2520',
-        }
-    }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'SAMIYOLsam2520',
+        'HOST': '127.0.0.1',
+        'PORT': '2520',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -169,7 +158,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -182,7 +170,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -202,3 +189,8 @@ EMAIL_HOST_USER = '69830d2150a9ab8ca21a4954e63d8fad'
 EMAIL_HOST_PASSWORD = 'ba9ee0a9f492e2430a78c9cacf61ff97'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'fxpippette@gmail.com'
+
+import dj_database_url
+
+prod_db = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
