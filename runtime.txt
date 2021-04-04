@@ -1,1 +1,1 @@
-python-3.8.8 pip install gunicorn dj-database-url whitenoise psycopg2
+python-3.6.13 pip install gunicorn dj-database-url whitenoise psycopg2
