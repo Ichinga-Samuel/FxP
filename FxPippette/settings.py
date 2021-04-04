@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['fxdjango.herokuapp.com', '127.0.0.1', 'localhost']
 
