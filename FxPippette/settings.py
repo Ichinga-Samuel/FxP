@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,11 +25,12 @@ SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fxdjango.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -38,15 +40,15 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
-    'filebrowser',
     'tinymce',
-    'sorl.thumbnail',
     'django_inlinecss',
     'django.contrib.admin',
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +64,18 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 STATIC_ROOT = BASE_DIR / 'static_root'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+GS_BUCKET_NAME = 'fxpipbucket1'
+GS_PROJECT_ID = 'fxpip-academy'
+GS_DEFAULT_ACL = None
+GS_QUERYSTRING_AUTH = False
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    BASE_DIR / 'config/fxpip-academy-45c77c356951.json'
+)
+LOCAL_CLOUD = False
+if LOCAL_CLOUD or not DEBUG:
+    STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -92,18 +105,22 @@ WSGI_APPLICATION = 'FxPippette.wsgi.application'
 # 'file_picker_callback': 'mce_filebrowser',
 # 'images_upload_url': 'filebrowser/',
 
-TINYMCE_FILEBROWSER = 'filebrowser'
+# TINYMCE_FILEBROWSER = 'filebrowser'
 
 # 'file_browser_callback': 'filebrowser',
 # TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
 # TINYMCE_COMPRESSOR = False
+# 'images_upload_url': 'admin/filebrowser/',
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
-    'theme': 'modern',
-    'images_upload_url': 'admin/filebrowser/',
+    'theme': 'silver',
+    'file_browser_callback': "myFileBrowser",
     'plugins': '''
             textcolor save link image media preview codesample contextmenu
             table code lists fullscreen  insertdatetime  nonbreaking
@@ -129,17 +146,43 @@ TINYMCE_DEFAULT_CONFIG = {
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'SAMIYOLsam2520',
-        'HOST': '127.0.0.1',
-        'PORT': '2520',
+if os.getenv('GAE_APPLICATION', None):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'cloudsql/fxpip-academy:europe-west2:fxapp1=tcp:3306',
+        }
     }
-}
+elif LOCAL_CLOUD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
+# pg = 'default':{
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'postgres',
+#             'USER': 'postgres',
+#             'PASSWORD': 'SAMIYOLsam2520',
+#             'HOST': '127.0.0.1',
+#             'PORT': '2520',
+#         }
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -190,7 +233,7 @@ EMAIL_HOST_PASSWORD = 'ba9ee0a9f492e2430a78c9cacf61ff97'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'fxpippette@gmail.com'
 
-import dj_database_url
-
-prod_db = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+# import dj_database_url
+#
+# prod_db = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)

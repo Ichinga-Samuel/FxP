@@ -3,18 +3,41 @@
 {% endblock head %}
 {% block content %}
     {% include 'banner.html' %}
+
     <div class="container mx-auto pt-5 col-lg-3 col-sm-auto box ">
         <form action="{% url 'signup' %}" method="post" class="border-dark border-5">
             {% csrf_token %}
-            <div class="mb-1">
-                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
-                {{ form.username }}
+          {%if form.errors%}
+            <div class="has-error">
+              Correct the error(s) Below
             </div>
+          {% endif %}
+          {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+              <p class="has-error">
+                {{ error }}hi
+              </p>
+            {% endfor %}
+           {% endif %}
             <div class="mb-1">
-                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+              <div class="has-error">
+                {%  for err in form.email.errors%}
+                  <div class="has-error">
+                    {{ err }}
+                  </div>
+                {% endfor %}
+              </div>
+              <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
                 {{ form.email }}
             </div>
-            <div class="mb-1">
+            <div class="mb-1 ">
+                <div class="has-error">
+                {% for err in form.password1.errors %}
+                  <div class="has-error">
+                    {{ err }}
+                  </div>
+                {% endfor %}
+              </div>
                 <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
                 {{ form.password1 }}
                 <div class="form-text">
@@ -22,8 +45,18 @@
                 </div>
             </div>
             <div class="mb-1">
-                <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                {{ form.password2 }}
+              <div class="has-error">
+                {%  for err in form.password2.errors%}
+                  <div class="has-error">
+                    {{ err }}
+                  </div>
+                {% endfor %}
+              </div>
+              <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+              {{ form.password2 }}
+              <div class="form-text">
+                  {{ form.password2.help_text }}
+              </div>
             </div>
             <div class="text-center pt-2">
                 <button class="btn btn-primary ">Sign Up</button>

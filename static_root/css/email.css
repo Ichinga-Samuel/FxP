@@ -1,52 +1,56 @@
 
 :root{
-    font-size: 0.875em;
     box-sizing: border-box;
 }
 
 body{
-    background-color: #f0f0f0;
-    color: #bfe6ff;
+    background-color:white;
+    color: black;
+    font-size: 12px;
+    padding: 20px 0;
+    margin: auto;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
 .main{
-    background-color: #252525;
+    max-width: 90vw;
     margin: auto;
-    width: 65rem;
 }
 
 .head{
     text-align: center;
-    background: #f9f9f9;
-    color: #191c1f;
-    font-family: "Agency FB";
-    font-size: 50px;
-    padding: 10px 0;
+    font-size: 32px;
     height: 100%;
 }
 
 .msg{
-    text-align: center;
-    font-size: 2rem;
+    text-align: start;
+    padding-left: 3%;
 }
 
 .btn1{
-    border: 3px;
-    border-radius: 10%;
-    padding: 5px;
-    background-color: darkorange;
-    color: #fff;
+    border-radius: 5%;
+    background-color: royalblue;
+    color: white;
     text-decoration: none;
+    text-align: center;
 }
 
 .copy{
-    background: #222;
+    background: oldlace;
     margin: 2px 0 0;
     text-align: center;
-    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    padding-left: 3%;
+
 }
 .user{
-    text-align: justify;
-    padding-left: 2em;
-    font-size: 2rem;
+    text-align: start;
+    padding-left: 3%;
+    text-transform: uppercase;
+}
+.inform{
+    padding-left: 3%;
+}
+table{
+    border-spacing: 10px;
 }

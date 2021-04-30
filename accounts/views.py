@@ -3,11 +3,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth import login, get_user_model
 
 from .forms import UserRegistrationForm
 from .tokens import account_activation_token
+
+User = get_user_model()
 
 
 def signup(request):
@@ -15,7 +16,6 @@ def signup(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
             user.save()
             current_site = get_current_site(request)
             context1 = {
@@ -30,7 +30,8 @@ def signup(request):
             try:
                 user.email_user(subject, message, html_message=html_msg)
                 return redirect('activation_sent')
-            except:
+            except Exception as e:
+                print(e)
                 return redirect('activation_unsuccessful')
     else:
         form = UserRegistrationForm()
@@ -45,7 +46,6 @@ def activate(request, uidb64, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
         user.profile.verified = True
         user.save()
         login(request, user)
@@ -60,17 +60,3 @@ def activation_sent(request):
 
 def activation_not_sent(request):
     return render(request, 'activation/activation_not_sent.html')
-
-# def signup(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=username, password=raw_password)
-#             login(request, user)
-#             return redirect('home:home_page')
-#     else:
-#         form = UserRegistrationForm()
-#     return render(request, 'signup.html', {'form': form})

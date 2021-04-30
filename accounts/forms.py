@@ -1,36 +1,52 @@
 from django import forms
-from django.contrib.auth import password_validation
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth import password_validation, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm, \
     SetPasswordForm
-
-attrs = {'class': 'form-control', 'placeholder': ''}
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+attrs = {'class': 'form-control', 'placeholder': '', 'required': True}
+User = get_user_model()
 
 
 class UserLoginForm(AuthenticationForm):
 
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
-    username = forms.CharField(widget=forms.TextInput(attrs=attrs))
+    username = forms.EmailField(widget=forms.EmailInput(attrs=attrs))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
+
+    error_messages = {
+        **AuthenticationForm.error_messages,
+        'invalid_login': _(
+            "Please enter the correct %(username)s and password"
+            " Note that both fields may be case-sensitive."
+        ),
+    }
+    required_css_class = 'required'
+
+    def confirm_login_allowed(self, user):
+        super().confirm_login_allowed(user)
+        if not user.is_active:
+            raise ValidationError(
+                self.error_messages['invalid_login'],
+                code='invalid_login',
+                params={'username': self.username_field.verbose_name}
+            )
+
+
 
 
 class UserRegistrationForm(UserCreationForm):
 
-    username = forms.CharField(max_length=30, required=False, help_text='Enter a Preferred Username',
-                               widget=forms.TextInput(attrs=attrs))
-
     email = forms.EmailField(max_length=254, help_text='Enter a valid email address.',
                              widget=forms.EmailInput(attrs=attrs))
     password1 = forms.CharField(help_text='Your password must be 8-20 characters long, and must contain'
-                                          'numbers, lower and upper case letters',
+                                          ' numeric, lower and upper case letters',
                                 widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
+    password2 = forms.CharField(help_text="Enter the same password as before, for verification.", widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', )
+        fields = ('email', 'password1', 'password2',)
 
 
 class PasswordReset(PasswordResetForm):
@@ -51,3 +67,14 @@ class PasswordChange(SetPasswordForm):
         strip=False,
         widget=forms.PasswordInput(attrs=attrs),
     )
+
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    # p = SetPasswordForm(User)
+    old_password = forms.CharField(
+        label="Old password",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True, **attrs}),
+    )
+    # p.new_password1.widget_attrs().update(attrs)
+    # p.new_password2.widget_attrs().update(attrs)

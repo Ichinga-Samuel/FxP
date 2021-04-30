@@ -1,34 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="container-sm row my-3 py-3">
-{#        <div class="row">#}
-            <article class="col-sm-auto mx-auto">
+    <section class="container my-5">
+            <article class="mx-auto">
                 <h2 class="">{{ article.title }}</h2>
                 <div class="">
-                    {% autoescape off%}
+                  {% autoescape off%}
                     {{ article.content}}
-                {% endautoescape %}
+                  {% endautoescape %}
                 </div>
 
-                <div class="">
+                <div class="row row-cols-2 bg-secondary">
                     {% if prev %}
-                        <a href="{{prev.get_absolute_url}}" class="btn btn-primary">Previous</a>
+                      <div class="col ps-0">
+                        <a href="{{prev}}" class="btn btn-primary "><i class="fas fa-arrow-left"></i>Previous</a>
+                      </div>
                     {% endif %}
                     {% if next %}
-                        <a href="{{next.get_absolute_url}}" class="btn btn-primary">Next</a>
+                      <div class="col px-0 d-flex flex-fill justify-content-end">
+                        <a href="{{next}}" class="btn btn-primary di"><i class="fas fa-arrow-right"></i>Next</a>
+                      </div>
                     {% endif %}
                 </div>
             </article>
-{#        </div>#}
     </section>
 {% endblock content %}
 
 {% block content1 %}
     {% if others %}
-    <section class="container-sm pb-3">
+    <section class="container mb-3">
         <h2>Related Lessons</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4 ">
+        <div class="row row-cols-md-4 g-4 justify-content-around">
             {% for art in others %}
                 <div class="col">
                     {% include 'articles/article_card.html' with article=art %}

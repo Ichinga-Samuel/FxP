@@ -1,4 +1,5 @@
 {% load inlinecss %}
+{% load static %}
 {% inlinecss "css/email.css" %}
 <html lang="en">
   <head>
@@ -19,8 +20,10 @@
         </td>
       </tr>
       <tr>
-        {% block info %}
-        {% endblock info %}
+        <td class="inform">
+          {% block info %}
+          {% endblock info %}
+        </td>
       </tr>
       <tr>
         <td class="msg">

@@ -16,18 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, re_path, include
-from filebrowser.sites import site
 from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('admin/filebrowser/', site.urls),
     path('tinymce/', include('tinymce.urls')),
+    path('admin/docs/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('', include('home.urls', namespace='home')),
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls', namespace='articles')),
+    path('courses/', include('articles.urls_1', namespace='courses')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# from filebrowser.sites import site
+# path('admin/filebrowser/', site.urls),

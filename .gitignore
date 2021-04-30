@@ -1,11 +1,12 @@
-
+.git/
 .idea/
-
-
-
-
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.config/
+static/
+static_root/
+media/
+**/migrations/
+**/__pycache__/
+**/static/
+**/media/
+*.sqlite3
+*.yaml

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <section class="container my-4">
+    <section class="container my-5">
         <div class="row">
             <div class="col-sm-6">
                 <h2 class="">Learn Forex</h2>
@@ -10,18 +10,20 @@
                 </p>
             </div>
             {% if featured %}
-            <div class="col-sm-6 px-4">
-              <div class="">
-                {% include 'articles/article_card.html' with article=featured%}
+            <div class="col-sm-4 col-lg-4 offset-lg-2 offset-sm-2">
+                <div class="col mx-auto">
+                  {% include 'articles/article_card.html' with article=featured%}
+                </div>
+
             </div>
             </div>
         </div>
         {% endif %}
     </section>
     {% if articles %}
-    <section class="container-sm my-4">
+    <section class="container my-4">
         <h2>Latest Articles</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-around">
             {% for art in articles %}
                 <div class="col">
                     {% include 'articles/article_card.html' with article=art %}
