@@ -1,0 +1,16 @@
+<div class="card h-100">
+    <div class="card-header">
+        {{ course.name }}
+    </div>
+        <img src="{{course.banner.url}}" alt="" class="card-img-top img-fluid" style="height: 200px">
+    <div class="card-body">
+        <h5 class="card-title">{{ course }}</h5>
+        <p class="card-text">{{ course.summary|truncatewords:25|safe }}</p>
+        <a href="{{ course.get_absolute_url }}" class="btn btn-primary">Go to Course</a>
+    </div>
+    <div class="card-footer">
+      {% for tag in course.tags.all %}
+      <span><i class="fas fa-tag "></i>{{ tag }}</span>
+      {% endfor %}
+    </div>
+</div>

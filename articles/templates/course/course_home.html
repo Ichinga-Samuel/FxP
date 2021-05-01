@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <section class="container-sm mx-3 my-2">
+     <p>Our rich collection of courses will get you started. We offer the best courses in all areas of financial trading</p>
+ </section>
+{% endblock content %}
+
+{% block content1 %}
+  <section class="container-sm mx-3 my-2">
+    <h3>Currently available courses include</h3>
+    <div class="row-cols-auto">
+      {% for course in courses %}
+        <div class="col">
+          {% include 'course/course_card.html' with course=course %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+{% endblock content1 %}
