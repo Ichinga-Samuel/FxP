@@ -25,7 +25,8 @@ SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]  #[https://fxpip-academy.nw.r.appspot.com]
+
 
 # Application definition
 
@@ -153,7 +154,7 @@ if os.getenv('GAE_APPLICATION', None):
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'cloudsql/fxpip-academy:europe-west2:fxapp1=tcp:3306',
+            'HOST': '/cloudsql/fxpip-academy:europe-west2:fxapp',
         }
     }
 elif LOCAL_CLOUD:

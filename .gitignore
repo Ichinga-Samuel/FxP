@@ -10,3 +10,4 @@ media/
 **/media/
 *.sqlite3
 *.yaml
+.gcloudignore
