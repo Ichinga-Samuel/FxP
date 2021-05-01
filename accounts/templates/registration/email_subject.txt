@@ -1,3 +1,0 @@
-{% load i18n %}{% autoescape off %}
-{% blocktranslate %}Reset Your FxPippette Password{% endblocktranslate %}
-{% endautoescape %}
