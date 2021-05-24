@@ -10,17 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
 from google.oauth2 import service_account
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9^q%@+w$gn^iyfj2qy3a@43e36o9@mbj2(+h75jfu9r8ivxklw'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -67,10 +70,11 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'static_root'
 
 
-GS_BUCKET_NAME = 'fxpipbucket0'
-GS_PROJECT_ID = 'fxpippete'
-GS_DEFAULT_ACL = None
-GS_QUERYSTRING_AUTH = False
+GS_BUCKET_NAME = env('GS_BUCKET_NAME')
+GS_PROJECT_ID = env('GS_PROJECT_ID')
+GS_DEFAULT_ACL = env('GS_DEFAULT_ACL')
+GS_QUERYSTRING_AUTH = env('GS_QUERYSTRING_AUTH')
+
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     BASE_DIR / 'config/fxpipette-3b14462d2cef.json'
 )
@@ -141,19 +145,19 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': '/cloudsql/fxpipette:europe-west2:fxapp0',
+            'NAME': env('PD_NAME'),
+            'USER': env('PD_USER'),
+            'PASSWORD': env('PD_PASSWORD'),
+            'HOST': env('PD_HOST'),
         }
     }
 elif LOCAL_CLOUD:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
+            'NAME': env('DEV_NAME'),
+            'USER': env('DEV_USER'),
+            'PASSWORD': env('DEV_PASSWORD'),
             'HOST': '127.0.0.1',
             'PORT': '3306',
         }
@@ -206,11 +210,10 @@ LOGIN_REDIRECT_URL = 'home:home_page'
 LOGOUT_REDIRECT_URL = 'home:home_page'
 
 # Email Settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'in-v3.mailjet.com'
-EMAIL_PORT = 465
-# EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '69830d2150a9ab8ca21a4954e63d8fad'
-EMAIL_HOST_PASSWORD = 'ba9ee0a9f492e2430a78c9cacf61ff97'
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = 'fxpippette@gmail.com'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
