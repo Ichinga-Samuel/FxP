@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'tinymce',
+    'filebrowser',
     'django_inlinecss',
     'django.contrib.admin',
 ]
@@ -66,12 +67,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'static_root'
 
 
-GS_BUCKET_NAME = 'fxpipbucket1'
-GS_PROJECT_ID = 'fxpip-academy'
+GS_BUCKET_NAME = 'fxpipbucket0'
+GS_PROJECT_ID = 'fxpippete'
 GS_DEFAULT_ACL = None
 GS_QUERYSTRING_AUTH = False
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    BASE_DIR / 'config/fxpip-academy-45c77c356951.json'
+    BASE_DIR / 'config/fxpipette-3b14462d2cef.json'
 )
 LOCAL_CLOUD = False
 if LOCAL_CLOUD or not DEBUG:
@@ -103,25 +104,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FxPippette.wsgi.application'
 
-# 'file_picker_callback': 'mce_filebrowser',
-# 'images_upload_url': 'filebrowser/',
-
-# TINYMCE_FILEBROWSER = 'filebrowser'
-
-# 'file_browser_callback': 'filebrowser',
-# TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
-# TINYMCE_COMPRESSOR = False
-# 'images_upload_url': 'admin/filebrowser/',
-
-TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
-TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
+TINYMCE_FILEBROWSER = True
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
     'theme': 'silver',
-    'file_browser_callback': "myFileBrowser",
+    'file_browser_callback': "filebrowser",
     'plugins': '''
             textcolor save link image media preview codesample contextmenu
             table code lists fullscreen  insertdatetime  nonbreaking
@@ -154,7 +144,7 @@ if os.getenv('GAE_APPLICATION', None):
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': '/cloudsql/fxpip-academy:europe-west2:fxapp',
+            'HOST': '/cloudsql/fxpipette:europe-west2:fxapp0',
         }
     }
 elif LOCAL_CLOUD:
@@ -176,15 +166,6 @@ else:
         }
     }
 
-# pg = 'default':{
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'postgres',
-#             'USER': 'postgres',
-#             'PASSWORD': 'SAMIYOLsam2520',
-#             'HOST': '127.0.0.1',
-#             'PORT': '2520',
-#         }
-# Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -207,7 +188,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
@@ -233,8 +214,3 @@ EMAIL_HOST_USER = '69830d2150a9ab8ca21a4954e63d8fad'
 EMAIL_HOST_PASSWORD = 'ba9ee0a9f492e2430a78c9cacf61ff97'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'fxpippette@gmail.com'
-
-# import dj_database_url
-#
-# prod_db = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(prod_db)

@@ -2,9 +2,10 @@
 
 {% block content %}
   <section class="container mt-5">
-    <article class="mx-auto ">
-      <h2 class="">{{ course.name }}</h2>
-      <div class="">
+
+    <article class="mx-auto row row-cols-auto">
+      <h2 class="col-auto">{{ course.name }}</h2>
+      <div class="col-auto">
         {% autoescape off%}
           {{ course.content}}
         {% endautoescape %}

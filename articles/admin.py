@@ -32,8 +32,8 @@ class ArticleAdmin(admin.ModelAdmin):
     save_on_top = True
     view_on_site = True
     list_select_related = ('author', 'course')
-    fieldsets = (('Main', {'fields': ('title', 'status', 'banner', 'summary', 'num', 'slug', 'content', 'author', 'course', 'tags')}),
-                 ('Time', {'fields': ('publish', 'duration', 'created'), 'classes': ('collapse', 'wide')}))
+    fieldsets = (('Main', {'fields': ('title', 'status', 'banner', 'summary', 'num', 'slug', 'content', 'duration', 'author', 'course', 'tags')}),
+                 ('Time', {'fields': ('publish', 'created'), 'classes': ('collapse', 'wide')}))
     readonly_fields = ('created',)
     list_display = ('title', 'publish', 'status', 'author', 'duration', 'summary')
     list_display_links = ('summary', )

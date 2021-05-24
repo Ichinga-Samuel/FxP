@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
+from filebrowser.sites import site
 
 
 urlpatterns = [
+    path('admin/filebrowser/', site.urls),
     path('tinymce/', include('tinymce.urls')),
     path('admin/docs/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),

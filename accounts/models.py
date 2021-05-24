@@ -47,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
+
         return self.email
 
     def email_user(self, subject, message, from_email=None, **kwargs):
@@ -65,12 +66,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     user = models.OneToOneField(U, on_delete=models.CASCADE)
     verified = models.BooleanField(default=False)
-    username = models.CharField(max_length=255)
+    subscribed = models.BooleanField(default=False)
+    username = models.CharField(max_length=255, blank=True)
     firstName = models.CharField(max_length=255, blank=True)
     lastName = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return f'{self.username}'
+        return f'{self.user.email}'
 
 
 @receiver(post_save, sender=User)

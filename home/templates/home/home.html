@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+
+{% block profile %}
+  <button class="nav-link btn " data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-list"></i></button>
+    {% include 'home/profile.html' with data=profile form=form %}
+{% endblock profile %}
+
 {% block content %}
     <section class="container my-5">
         <div class="row">

@@ -17,7 +17,7 @@ class Article(models.Model):
     course = models.ForeignKey('Course', on_delete=models.RESTRICT)
     num = models.IntegerField(help_text='use this to arrange the lessons serially for each level', unique=True)
     banner = models.ImageField(upload_to=f'uploads/articles/images/')
-    status = models.CharField(max_length=10, choices=SC, default='draft', help_text='If the lesson is ready. Set the status to publish')
+    status = models.CharField(max_length=10, choices=SC, default='published', help_text='If the lesson is ready. Set the status to publish')
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Articles')
     content = HTMLField()

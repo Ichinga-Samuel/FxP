@@ -5,6 +5,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
     SetPasswordForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
+from accounts.models import Profile
+
 attrs = {'class': 'form-control', 'placeholder': '', 'required': True}
 User = get_user_model()
 
@@ -31,8 +34,6 @@ class UserLoginForm(AuthenticationForm):
                 code='invalid_login',
                 params={'username': self.username_field.verbose_name}
             )
-
-
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -70,11 +71,18 @@ class PasswordChange(SetPasswordForm):
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
-    # p = SetPasswordForm(User)
     old_password = forms.CharField(
         label="Old password",
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True, **attrs}),
     )
-    # p.new_password1.widget_attrs().update(attrs)
-    # p.new_password2.widget_attrs().update(attrs)
+
+
+class ProfileForm(forms.ModelForm):
+    subscribe = forms.BooleanField(widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
+
+    class Meta:
+        model = Profile
+        exclude = ["verified", "user", "subscribed"]
+        widgets = {"username": forms.TextInput(attrs=attrs), "firstName": forms.TextInput(attrs=attrs), "lastName": forms.TextInput(attrs=attrs)}
+
