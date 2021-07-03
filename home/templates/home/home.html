@@ -8,15 +8,15 @@
 {% block content %}
     <section class="container my-5">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-auto">
                 <h2 class="">Learn Forex</h2>
-                <p class="display-6">
+                <p class="h5">
                     Your one-stop guide to all things forex. Whether you're a rookie trying to understand
                     forex or a veteran looking to develop a trading strategy, we've got you covered.
                 </p>
             </div>
             {% if featured %}
-            <div class="col-sm-4 col-lg-4 offset-lg-2 offset-sm-2">
+            <div class="col-sm-auto col-md-4 offset-md-2">
                 <div class="col mx-auto">
                   {% include 'articles/article_card.html' with article=featured%}
                 </div>

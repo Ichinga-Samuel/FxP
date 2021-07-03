@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]  #[https://fxpip-academy.nw.r.appspot.com]
+ALLOWED_HOSTS = ["*"]  # [https://fxpip-academy.nw.r.appspot.com]
 
 
 # Application definition
@@ -72,7 +72,7 @@ STATIC_ROOT = BASE_DIR / 'static_root'
 
 GS_BUCKET_NAME = env('GS_BUCKET_NAME')
 GS_PROJECT_ID = env('GS_PROJECT_ID')
-GS_DEFAULT_ACL = env('GS_DEFAULT_ACL')
+# GS_DEFAULT_ACL = env('GS_DEFAULT_ACL')
 GS_QUERYSTRING_AUTH = env('GS_QUERYSTRING_AUTH')
 
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(

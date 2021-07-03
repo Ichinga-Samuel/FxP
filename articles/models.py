@@ -7,7 +7,6 @@ from random import randint
 
 from accounts.models import Profile
 
-F = models.F
 User = settings.AUTH_USER_MODEL
 
 
